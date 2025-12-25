@@ -3,7 +3,7 @@
 ## Tech Stack
 
 ### Window Manager
-river
+sway
 
 ### Greeter
 ly \
@@ -11,8 +11,7 @@ ly \
 If you get FileNotFound error, run `mkdir -p ~/.local/state`
 
 ### Stus Bar
-gbar
-gBar bar 0 &
+swaybar
 
 ### Terminal
 foot
@@ -77,6 +76,10 @@ sudo rm /boot/vmlinuz-linux-cachyos
 sudo rm /boot/initramfs-linux-cachyos.img
 ```
 
+## Swapping to zsh
+chsh -s /usr/bin/zsh
+
+
 ## Installed packages so far:
 ### After archinstall with minimal profile and NetworkManager selected
 git \
@@ -99,5 +102,7 @@ paru \
 ly \
 gbar-git (AUR) \
 htop \
-btop 
-
+btop \
+helix \
+zsh \
+zsh-syntax-highlighting
