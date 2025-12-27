@@ -79,6 +79,9 @@ sudo rm /boot/initramfs-linux-cachyos.img
 ## Swapping to zsh
 chsh -s /usr/bin/zsh
 
+## Installig the pure zsh theme
+mkdir -p "$HOME/.zsh"
+git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
 
 ## Installed packages so far:
 ### After archinstall with minimal profile and NetworkManager selected
@@ -105,4 +108,7 @@ htop \
 btop \
 helix \
 zsh \
-zsh-syntax-highlighting
+zsh-syntax-highlighting \
+slurp \
+grim \
+wl-clipboard (maybe, might be installed from another package)
