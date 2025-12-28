@@ -1,4 +1,4 @@
-theme = "monokai_pro_spectrum"
+theme = "monokai_pro_spectrum_transparent"
 
 [editor]
 line-number = "relative"

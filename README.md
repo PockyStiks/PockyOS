@@ -83,6 +83,10 @@ chsh -s /usr/bin/zsh
 mkdir -p "$HOME/.zsh"
 git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
 
+## Installing and enabling rtkit (removes pipewire warnings)
+sudo systemctl enable --now rtkit-daemon.service
+systemctl --user restart pipewire pipewire-pulse wireplumber
+
 ## Installed packages so far:
 ### After archinstall with minimal profile and NetworkManager selected
 git \
@@ -111,4 +115,5 @@ zsh \
 zsh-syntax-highlighting \
 slurp \
 grim \
-wl-clipboard (maybe, might be installed from another package)
+wl-clipboard (maybe, might be installed from another package) \
+rtkit

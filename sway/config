@@ -39,7 +39,7 @@ gaps outer 2
 smart_gaps off
 
 # Border Color
-client.focused #167574 #167574  #167574  #167574  #167574 
+client.focused #366066 #366066 #366066 #366066 #366066 
 client.unfocused #34393b #34393b #34393b #34393b #34393b
 client.focused_inactive #34393b #34393b #34393b #34393b #34393b
 #
@@ -231,15 +231,15 @@ bar {
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %X'; do sleep 1; done
-
+    status_command while "$HOME/.config/sway/scripts/statusbar.sh"; do sleep 1; done
     font pango:JetBrains Mono 11
+    gaps 5
 
     colors {
-        statusline #ffffff
-        background #ffffff00
-        inactive_workspace #34393b #32323200 #5c5c5c
-        focused_workspace #265958 #265958 #ffffff
+        statusline #cfccc0
+        background #131313
+        inactive_workspace #131313 #131313 #5c5c5c
+        focused_workspace #131313 #366066 #dfe0c8
     }
 }
 
