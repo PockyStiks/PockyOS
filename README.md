@@ -17,7 +17,7 @@ swaybar
 foot
 
 ### App launcher
-wofi
+fuzzel
 
 ### Wallpaper
 swaybg
@@ -103,7 +103,7 @@ lttf-nerd-fonts-symbols \
 noto-fonts \
 noto-fonts-emoji \
 firefox \
-wofi \
+fuzzel \
 mako \
 paru \
 ly \
@@ -116,4 +116,8 @@ zsh-syntax-highlighting \
 slurp \
 grim \
 wl-clipboard (maybe, might be installed from another package) \
-rtkit
+rtkit \
+i3status-rust \
+brightnessctl \
+xdg-open \
+yazi

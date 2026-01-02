@@ -1,0 +1,20 @@
+# General
+font=JetBrains Mono 11
+background-color=#131313AA
+text-color=#CFCCC0
+border-color=#366066
+border-size=1
+border-radius=0
+
+padding=10
+margin=10
+width=300
+height=120
+
+# Position
+anchor=top-right
+
+# Behavior
+default-timeout=5000
+ignore-timeout=0
+layer=overlay

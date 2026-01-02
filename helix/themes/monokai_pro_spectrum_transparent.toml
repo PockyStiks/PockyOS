@@ -1,2 +1,7 @@
 inherits = "monokai_pro_spectrum"
 "ui.background" = {}
+"ui.menu" = {}
+"ui.help" = {}
+"ui.window" = {}
+"ui.popup" = {}
+"ui.statusline" = {}

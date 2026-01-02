@@ -1,0 +1,46 @@
+[theme]
+theme = "native"
+[theme.overrides]
+separator_fg = "#5C5C5C"
+
+[icons]
+icons = "material-nf"
+
+# Keyboard layout
+[[block]]
+block = "keyboard_layout"
+driver = "sway"
+mappings = { "English (US)" = "en", "French (Canada)" = "fr" }
+
+# Brightness
+[[block]]
+block = "backlight"
+step_width = 5
+invert_icons = false
+
+# Volume
+[[block]]
+block = "sound"
+driver = "pulseaudio"
+step_width = 5
+show_volume_when_muted = true
+
+[[block]]
+block = "net"
+format = " $icon {$ssid|Wired connection} "
+
+# Battery
+[[block]]
+block = "battery"
+interval = 1
+format = " $icon $percentage "
+full_format = " $icon $percentage "
+charging_format = " 󰂄 $percentage "
+warning = 20
+critical = 10
+
+# Date and time
+[[block]]
+block = "time"
+format = " $timestamp.datetime(f:'%a %b %d %I:%M %p') "
+interval = 1

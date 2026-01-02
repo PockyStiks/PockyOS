@@ -1,0 +1,7 @@
+[opener]
+edit = [
+    { run = "helix \"$@\"", block = true },
+]
+open = [
+    { run = "xdg-open \"$@\"", desc = "Open" },
+]
