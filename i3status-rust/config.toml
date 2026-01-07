@@ -24,7 +24,9 @@ block = "sound"
 driver = "pulseaudio"
 step_width = 5
 show_volume_when_muted = true
+headphones_indicator = true
 
+# Network
 [[block]]
 block = "net"
 format = " $icon {$ssid|Wired connection} "

@@ -2,6 +2,7 @@ theme = "monokai_pro_spectrum_transparent"
 
 [editor]
 line-number = "relative"
+smart-tab.enable = false
 
 [editor.cursor-shape]
 insert = "bar"

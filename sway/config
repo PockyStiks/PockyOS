@@ -42,10 +42,27 @@ input * {
 bindsym $mod+Shift+r reload
 
 # Launching apps
-bindsym $mod+Return exec $term
-bindsym $mod+c kill
-bindsym $mod+r exec $menu
-bindsym $mod+b exec $browser
+bindsym $mod+Return exec $term # Open terminal
+bindsym $mod+q kill # Kill window
+bindsym $mod+r exec $menu # App launcher
+bindsym $mod+i exec $browser # Browser
+bindsym $mod+d exec discord
+bindsym $mod+n exec $term -e wlctl # Network TUI
+bindsym $mod+s exec $term -e wiremix # Sound mixer TUI
+bindsym $mod+b exec $term -e bluetui # Bluetooth TUI
+bindsym $mod+p exec ~/.config/scripts/power_menu.sh # Power menu
+bindsym $mod+u exec ~/.config/scripts/update_menu.sh # Update menu
+bindsym $mod+c exec ~/.config/scripts/config_menu.sh # Config menu
+bindsym $mod+m exec ~/.config/scripts/menu.sh # General menu
+
+# Keybind help menu
+for_window [title="Help"] floating enable, resize set 900 700, move position center
+bindsym $mod+Shift+slash exec ~/.config/scripts/help_menu.sh
+
+# Special key to take a screenshot of a screen area and copy it to clipboard
+bindsym Print exec slurp | grim -g - - | tee ~/Pictures/Screenshots/$(date +%s).png | wl-copy
+# Same thing, but using a different keubind
+bindsym $mod+Shift+s exec slurp | grim -g - - | tee ~/Pictures/Screenshots/$(date +%s).png | wl-copy
 
 # Switching keyboard layout
 bindsym $mod+space input * xkb_switch_layout next
@@ -135,9 +152,6 @@ bindsym --locked XF86AudioMicMute exec pactl set-source-mute \@DEFAULT_SOURCE@ t
 # Special keys to adjust brightness via brightnessctl
 bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
 bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
-
-# Special key to take a screenshot with grim
-bindsym Print exec grim
 
 ### Status Bar
 bar {

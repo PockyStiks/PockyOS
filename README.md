@@ -27,7 +27,7 @@ systemd-boot with UKI
 
 ### Network
 NetworkManager \
-wifitui
+wlctl
 
 ### Audio
 pipewire \
@@ -35,7 +35,7 @@ wiremix
 
 ### Bluetooth
 bluez \
-bluetuith
+bluetui
 
 ### Fonts
 ttf-jetbrains-mono \
@@ -55,7 +55,7 @@ sudo ./cachyos-repo.sh
 sudo pacman -S linux-cachyos linux-cachyos-headers
 sudo vim /etc/mkinitcpio.d/linux-cachy.preset
 ```
-make sure these lines are uncomented, and the rest is comented. Also change /efi to /boot in the path
+Make sure these lines are uncomented, and the rest is comented. Also change /efi to /boot in the path
 ```bash
 ALL_config="/etc/mkinitcpio.conf"
 ALL_kver="/boot/vmlinuz-linux-cachyos"
@@ -71,7 +71,9 @@ bootctl list
 sudo bootctl set-default arch-linux-cachyos.efi
 reboot
 uname -r # should see cachyos
-sudo pacman -R linux # if everything works, remove the old kernel, remove linux-headers too if you installed it
+
+# If everything works, remove the old kernel, remove linux-headers too if you installed it
+sudo pacman -R linux
 sudo rm /boot/vmlinuz-linux-cachyos
 sudo rm /boot/initramfs-linux-cachyos.img
 ```
@@ -87,6 +89,9 @@ git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
 sudo systemctl enable --now rtkit-daemon.service
 systemctl --user restart pipewire pipewire-pulse wireplumber
 
+## Make sure this directory exists for screenshots
+mkdir -p ~/Pictures/Screenshots
+
 ## Installed packages so far:
 ### After archinstall with minimal profile and NetworkManager selected
 git \
@@ -96,7 +101,7 @@ amd-ucode \
 mesa \
 vulkan-radeon \
 libva-utils (optional, might remove) \
-river \
+sway \
 foot \
 ttf-jetbrains-mono \
 lttf-nerd-fonts-symbols \
@@ -107,7 +112,6 @@ fuzzel \
 mako \
 paru \
 ly \
-gbar-git (AUR) \
 htop \
 btop \
 helix \
@@ -115,9 +119,14 @@ zsh \
 zsh-syntax-highlighting \
 slurp \
 grim \
-wl-clipboard (maybe, might be installed from another package) \
+wl-clipboard \
 rtkit \
 i3status-rust \
 brightnessctl \
 xdg-open \
-yazi
+yazi \
+zoxide \
+fzf \
+wlctl-bin (AUR) \
+wiremix \
+bluetui 
