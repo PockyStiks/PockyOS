@@ -48,8 +48,9 @@ bindsym $mod+r exec $menu # App launcher
 bindsym $mod+i exec $browser # Browser
 bindsym $mod+d exec discord
 bindsym $mod+n exec $term -e wlctl # Network TUI
-bindsym $mod+s exec $term -e wiremix # Sound mixer TUI
+bindsym $mod+a exec $term -e wiremix # Audio mixer TUI
 bindsym $mod+b exec $term -e bluetui # Bluetooth TUI
+bindsym $mod+s exec $term -e btop # System info TUI
 bindsym $mod+p exec ~/.config/scripts/power_menu.sh # Power menu
 bindsym $mod+u exec ~/.config/scripts/update_menu.sh # Update menu
 bindsym $mod+c exec ~/.config/scripts/config_menu.sh # Config menu

@@ -10,7 +10,7 @@ A minimal, performance-oriented Arch Linux desktop environment built around the 
 | **Display Manager** | ly |
 | **Status Bar** | i3status-rust |
 | **Terminal** | Foot |
-| **Shell** | zsh + Pure |
+| **Shell** | zsh + Pure, zsh-syntax-highlighting, zoxide |
 | **Application Launcher** | Fuzzel |
 | **Notifications** | Mako |
 | **Wallpaper** | swaybg |
@@ -24,7 +24,7 @@ A minimal, performance-oriented Arch Linux desktop environment built around the 
 | **Bluetooth** | bluez, bluetui |
 | **Screenshots** | grim + slurp |
 | **Power Management** | TLP |
-| **System Monitoring** | htop, btop |
+| **System Monitoring** | btop |
 
 ## Installation
 
@@ -38,16 +38,18 @@ Archinstall instructions:
 2. Run `archinstall`
 3. Configure the following:
    - **Profile**: Select `minimal` profile
-   - **Network**: Enable `NetworkManager`
-   - **Bluetooth**: Enabled *(if you have it)*
+   - **Audio**: PipeWire
+   - **Kernel** linux, UKI enabled
+   - **Bluetooth**: Enabled (if you have it)
    - **Additional packages**: Add `git`, `vim` (or `nano`)
+   - **Network**: Enable `NetworkManager`
    - Complete the rest of the installation as desired
 
 After installation completes, reboot into your new system.
 
 ### 2. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/PockyOS.git
+git clone https://github.com/PockyStiks/PockyOS.git
 cd PockyOS
 ```
 
@@ -67,7 +69,7 @@ sudo pacman -S linux-cachyos linux-cachyos-headers
 sudo vim /etc/mkinitcpio.d/linux-cachyos.preset
 ```
 
-Edit the preset file to uncomment these lines and change `/efi` to `/boot`:
+Edit the preset file to uncomment these lines and change `/efi` to `/boot`, unless configured otherwise during `archinstall`:
 ```bash
 ALL_config="/etc/mkinitcpio.conf"
 ALL_kver="/boot/vmlinuz-linux-cachyos"
@@ -102,11 +104,12 @@ Install all packages that are needed regardless of hardware:
 ```bash
 sudo pacman -S --needed git vim wget mesa sway foot ttf-jetbrains-mono \
     ttf-nerd-fonts-symbols noto-fonts noto-fonts-emoji firefox fuzzel mako \
-    ly htop btop helix zsh zsh-syntax-highlighting slurp grim wl-clipboard \
+    ly btop helix zsh zsh-syntax-highlighting slurp grim wl-clipboard \
     rtkit i3status-rust brightnessctl xdg-utils yazi zoxide fzf wiremix \
     bluetui paru xdg-desktop-portal-wlr polkit xorg-xwayland pipewire-alsa \
-    pipewire-pulse unzip tlp
+    pipewire-pulse unzip base-devel
 ```
+**Note:** A web browser is not included, please chose and install one.
 
 ### 5. Install Hardware-Specific Packages
 
@@ -143,8 +146,16 @@ sudo pacman -S --needed nvidia nvidia-utils nvidia-settings
 
 **Note for NVIDIA users:** Add `nvidia_drm.modeset=1` to your kernel parameters. Wayland support on NVIDIA is improving but may have issues.
 
-### 6. Install AUR Packages
 ```bash
+sudo vim /etc/kernel/cmdline # Add nvidia_drm.modeset=1 to the end of this line, do not add new lines
+```
+
+### 6. Install Paru and AUR Packages
+```bash
+cd /tmp
+git clone https://aur.archlinux.org/paru.git
+cd paru
+makepkg -si
 paru -S wlctl-bin
 ```
 
@@ -152,11 +163,11 @@ paru -S wlctl-bin
 ```bash
 # Backup existing configs if you have any
 mkdir -p ~/.config/backup
-cp -r ~/.config/{foot,fuzzel,helix,i3status-rust,mako,sway,yazi} ~/.config/backup/ 2>/dev/null || true
+cp -r ~/.config/{foot,fuzzel,helix,i3status-rust,mako,sway,yazi,btop,wallpapers} ~/.config/backup/ 2>/dev/null || true
 mv ~/.zshrc ~/.zshrc.backup
 
 # Copy configuration files and wallpapers
-cp -r foot fuzzel helix i3status-rust mako sway yazi wallpapers ~/.config/
+cp -r foot fuzzel helix i3status-rust mako sway yazi btop wallpapers ~/.config/
 cp .zshrc ~
 
 # Make all scripts executable
@@ -180,8 +191,8 @@ chsh -s /usr/bin/zsh
 
 Install Pure zsh theme:
 ```bash
-mkdir -p "$HOME/.zsh"
-git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
+mkdir -p ~/.zsh
+git clone https://github.com/sindresorhus/pure.git ~/.zsh/pure
 ```
 
 ### 10. Configure Services
@@ -192,11 +203,12 @@ Enable audio and power management:
 sudo systemctl enable --now rtkit-daemon.service
 systemctl --user restart pipewire pipewire-pulse wireplumber
 
-# Enable TLP for power management (laptops)
+# Enable TLP for power management (for laptops only)
+sudo pacman -S tlp
 sudo systemctl enable tlp.service
 sudo systemctl start tlp.service
 
-# Enable Bluetooth (optional)
+# Enable Bluetooth (if you have it)
 sudo systemctl enable bluetooth.service
 sudo systemctl start bluetooth.service
 ```
@@ -232,8 +244,9 @@ PockyOS uses Sway as the window manager with a keyboard-driven workflow. The def
 | Keybind | Action |
 |---------|--------|
 | `Mod+N` | Network manager (wlctl) |
-| `Mod+S` | Audio mixer (wiremix) |
+| `Mod+A` | Audio mixer (wiremix) |
 | `Mod+B` | Bluetooth manager (bluetui) |
+| `Mod+S` | System info (btop) |
 | `Mod+P` | Power menu |
 | `Mod+U` | Update menu |
 | `Mod+C` | Config menu |
@@ -265,8 +278,8 @@ PockyOS uses Sway as the window manager with a keyboard-driven workflow. The def
 
 | Keybind | Action |
 |---------|--------|
-| `Mod+1` through `Mod+0` | Switch to workspace 1-10 |
-| `Mod+Shift+1` through `Mod+Shift+0` | Move window to workspace 1-10 |
+| `Mod+1` through `Mod+9` | Switch to workspace 1-9 |
+| `Mod+Shift+1` through `Mod+Shift+9` | Move window to workspace 1-9 |
 
 ### Window Layout
 

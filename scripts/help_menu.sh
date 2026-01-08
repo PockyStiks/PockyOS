@@ -14,8 +14,9 @@ Basics
 
 Menus / TUI
   Mod+N         Network TUI (wlctl)
-  Mod+S         Audio mixer TUI (wiremix)
+  Mod+A         Audio mixer TUI (wiremix)
   Mod+B         Bluetooth TUI (bluetui)
+  Mod+S         System info TUI (btop)
   Mod+P         Power menu
   Mod+U         Update menu
   Mod+C         Config menu
@@ -38,8 +39,8 @@ Move window
   Mod+LMB             Move window with mouse
 
 Workspaces
-  Mod+1..0      Switch workspace 1..10
-  Mod+Shift+1..0 Move window to workspace 1..10
+  Mod+1..9      Switch workspace 1..9
+  Mod+Shift+1..9 Move window to workspace 1..9
 
 Layout
   Mod+F         Fullscreen toggle
