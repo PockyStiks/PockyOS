@@ -10,6 +10,7 @@ Basics
   Mod+Q         Kill focused window
   Mod+R         App launcher
   Mod+I         Browser
+  Mod+E         File manager
   Mod+D         Discord
 
 Menus / TUI

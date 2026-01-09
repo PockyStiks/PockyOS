@@ -107,7 +107,7 @@ sudo pacman -S --needed git vim wget mesa sway foot ttf-jetbrains-mono \
     ly btop helix zsh zsh-syntax-highlighting slurp grim wl-clipboard \
     rtkit i3status-rust brightnessctl xdg-utils yazi zoxide fzf wiremix \
     bluetui paru xdg-desktop-portal-wlr polkit xorg-xwayland pipewire-alsa \
-    pipewire-pulse unzip base-devel
+    pipewire-pulse unzip base-devel udisks2 gvfs gvfs-mtp udiskie
 ```
 **Note:** A web browser is not included, please chose and install one.
 
@@ -203,14 +203,15 @@ Enable audio and power management:
 sudo systemctl enable --now rtkit-daemon.service
 systemctl --user restart pipewire pipewire-pulse wireplumber
 
+# Automatic USB device mounting
+sudo systemctl enable --now udisks2.service
+
 # Enable TLP for power management (for laptops only)
 sudo pacman -S tlp
-sudo systemctl enable tlp.service
-sudo systemctl start tlp.service
+sudo systemctl enable --now tlp.service
 
 # Enable Bluetooth (if you have it)
-sudo systemctl enable bluetooth.service
-sudo systemctl start bluetooth.service
+sudo systemctl enable --now bluetooth.service
 ```
 
 ### 11. Create Required Directories
@@ -237,6 +238,7 @@ PockyOS uses Sway as the window manager with a keyboard-driven workflow. The def
 | `Mod+Q` | Kill focused window |
 | `Mod+R` | Launch application launcher |
 | `Mod+I` | Open browser |
+| `Mod+E` | File manager |
 | `Mod+D` | Open Discord |
 
 ### TUI Menus

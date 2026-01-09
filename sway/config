@@ -8,10 +8,12 @@ set $right l
 set $term foot
 set $menu fuzzel
 set $browser firefox
+set $file_manager $term -e yazi
 
 ### Autostart
 exec autotiling
 exec mako
+exec udiskie
 
 ### Wallpaper
 output * bg ~/.config/wallpapers/lamp_post.png fill
@@ -46,6 +48,7 @@ bindsym $mod+Return exec $term # Open terminal
 bindsym $mod+q kill # Kill window
 bindsym $mod+r exec $menu # App launcher
 bindsym $mod+i exec $browser # Browser
+bindsym $mod+e exec $file_manager # File manager
 bindsym $mod+d exec discord
 bindsym $mod+n exec $term -e wlctl # Network TUI
 bindsym $mod+a exec $term -e wiremix # Audio mixer TUI
