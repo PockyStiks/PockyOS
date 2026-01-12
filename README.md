@@ -102,8 +102,8 @@ sudo rm /boot/initramfs-linux-cachyos.img
 Install all packages that are needed regardless of hardware:
 ```bash
 sudo pacman -S --needed git vim wget mesa sway foot ttf-jetbrains-mono
-    ttf-nerd-fonts-symbols noto-fonts noto-fonts-emoji fuzzel mako
-    ly btop helix zsh zsh-syntax-highlighting slurp grim wl-clipboard
+    ttf-nerd-fonts-symbols noto-fonts noto-fonts-emoji fuzzel autotiling
+    ly btop helix zsh zsh-syntax-highlighting slurp grim wl-clipboard mako
     rtkit i3status-rust brightnessctl xdg-utils yazi zoxide fzf wiremix
     bluetui xdg-desktop-portal-wlr polkit xorg-xwayland pipewire-alsa
     pipewire-pulse unzip base-devel udisks2 gvfs gvfs-mtp udiskie swaybg
@@ -165,8 +165,8 @@ mkdir -p ~/.config/backup
 cp -r ~/.config/{foot,fuzzel,helix,i3status-rust,mako,sway,yazi,btop,wallpapers} ~/.config/backup/ 2>/dev/null || true
 mv ~/.zshrc ~/.zshrc.backup
 
-# Copy configuration files and wallpapers
-cp -r foot fuzzel helix i3status-rust mako sway yazi btop wallpapers ~/.config/
+# Copy configuration files scripts, and wallpapers
+cp -r foot fuzzel helix i3status-rust mako sway yazi btop wallpapers scripts ~/.config/
 cp .zshrc ~
 
 # Make all scripts executable
