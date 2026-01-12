@@ -16,7 +16,6 @@ A minimal, performance-oriented Arch Linux desktop environment built around the 
 | **Wallpaper** | swaybg |
 | **Text Editors** | Helix, Vim |
 | **File Manager** | Yazi |
-| **Browser** | Firefox |
 | **Bootloader** | systemd-boot (UKI) |
 | **Kernel** | CachyOS |
 | **Network** | NetworkManager, wlctl |
@@ -102,12 +101,12 @@ sudo rm /boot/initramfs-linux-cachyos.img
 
 Install all packages that are needed regardless of hardware:
 ```bash
-sudo pacman -S --needed git vim wget mesa sway foot ttf-jetbrains-mono \
-    ttf-nerd-fonts-symbols noto-fonts noto-fonts-emoji firefox fuzzel mako \
-    ly btop helix zsh zsh-syntax-highlighting slurp grim wl-clipboard \
-    rtkit i3status-rust brightnessctl xdg-utils yazi zoxide fzf wiremix \
-    bluetui paru xdg-desktop-portal-wlr polkit xorg-xwayland pipewire-alsa \
-    pipewire-pulse unzip base-devel udisks2 gvfs gvfs-mtp udiskie
+sudo pacman -S --needed git vim wget mesa sway foot ttf-jetbrains-mono
+    ttf-nerd-fonts-symbols noto-fonts noto-fonts-emoji fuzzel mako
+    ly btop helix zsh zsh-syntax-highlighting slurp grim wl-clipboard
+    rtkit i3status-rust brightnessctl xdg-utils yazi zoxide fzf wiremix
+    bluetui xdg-desktop-portal-wlr polkit xorg-xwayland pipewire-alsa
+    pipewire-pulse unzip base-devel udisks2 gvfs gvfs-mtp udiskie swaybg
 ```
 **Note:** A web browser is not included, please chose and install one.
 
