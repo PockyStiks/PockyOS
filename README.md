@@ -158,6 +158,23 @@ makepkg -si
 paru -S wlctl-bin
 ```
 
+#### 6b. Install optional packages (stuff I personally use)
+```bash
+# Pipx for python cli tools
+sudo pacman -S pipx
+pipx ensurepath
+pipx install jupyterlab grip
+
+# Language servers
+pipx install ruff ty
+sudo pacman -S clang typescript-language-server typescript yaml-language-server marksman
+
+paru -S vscode-langservers-extracted
+
+# Micromamba for virtual environments
+"${SHELL}" <(curl -L micro.mamba.pm/install.sh)
+```
+
 ### 7. Deploy Configuration Files
 ```bash
 # Backup existing configs if you have any
