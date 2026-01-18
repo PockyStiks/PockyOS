@@ -90,23 +90,20 @@ reboot
 uname -r  # Should show cachyos kernel
 ```
 
-Clean up old kernel (if everything works):
+Clean up old kernel (only once if everything works):
 ```bash
 sudo pacman -R linux linux-headers
 sudo rm /boot/vmlinuz-linux-cachyos
 sudo rm /boot/initramfs-linux-cachyos.img
+sudo rm /boot/EFI/Linux/arch-linux.efi
+sudo rm /boot/vmlinuz-linux
 ```
 
 ### 4. Install System Packages
 
 Install all packages that are needed regardless of hardware:
 ```bash
-sudo pacman -S --needed git vim wget mesa sway foot ttf-jetbrains-mono
-    ttf-nerd-fonts-symbols noto-fonts noto-fonts-emoji fuzzel autotiling
-    ly btop helix zsh zsh-syntax-highlighting slurp grim wl-clipboard mako
-    rtkit i3status-rust brightnessctl xdg-utils yazi zoxide fzf wiremix
-    bluetui xdg-desktop-portal-wlr polkit xorg-xwayland pipewire-alsa
-    pipewire-pulse unzip base-devel udisks2 gvfs gvfs-mtp udiskie swaybg
+sudo pacman -S --needed man-db man-pages git vim wget mesa sway foot ttf-jetbrains-mono ttf-nerd-fonts-symbols noto-fonts noto-fonts-emoji fuzzel autotiling ly btop helix zsh zsh-syntax-highlighting slurp grim wl-clipboard mako rtkit i3status-rust brightnessctl xdg-utils yazi zoxide fzf wiremix bluetui xdg-desktop-portal-wlr polkit xorg-xwayland pipewire-alsa pipewire-pulse unzip base-devel udisks2 gvfs gvfs-mtp udiskie swaybg
 ```
 **Note:** A web browser is not included, please chose and install one.
 
@@ -140,39 +137,49 @@ sudo pacman -S --needed vulkan-intel libva-intel-driver intel-media-driver
 
 **NVIDIA GPU:**
 ```bash
-sudo pacman -S --needed nvidia nvidia-utils nvidia-settings
+sudo pacman -S --needed nvidia-open-dkms nvidia-utils nvidia-settings
 ```
 
-**Note for NVIDIA users:** Add `nvidia_drm.modeset=1` to your kernel parameters. Wayland support on NVIDIA is improving but may have issues.
+NVIDIA does **not officially support Wayland**, so you need to launch Sway with extra configurations. To make this easy:
 
+1. Install the Sway NVIDIA wrapper:  
 ```bash
-sudo vim /etc/kernel/cmdline # Add nvidia_drm.modeset=1 to the end of this line, do not add new lines
+paru -S sway-nvidia
 ```
+2. At the Ly login screen, select the Sway (NVIDIA) session using the arrow keys before logging in.
+
+Now Sway will start with the correct options for NVIDIA GPUs.
 
 ### 6. Install Paru and AUR Packages
 ```bash
-cd /tmp
 git clone https://aur.archlinux.org/paru.git
 cd paru
 makepkg -si
+cd ..
+rm -rf paru
 paru -S wlctl-bin
 ```
 
 #### 6b. Install optional packages (stuff I personally use)
 ```bash
 # Pipx for python cli tools
-sudo pacman -S pipx
+sudo pacman -S python-pipx
 pipx ensurepath
 pipx install jupyterlab grip
 
 # Language servers
 pipx install ruff ty
 sudo pacman -S clang typescript-language-server typescript yaml-language-server marksman
-
 paru -S vscode-langservers-extracted
 
 # Micromamba for virtual environments
 "${SHELL}" <(curl -L micro.mamba.pm/install.sh)
+
+# Blue light filter
+paru -S sunsetr
+
+# Discord
+sudo pacman -S discord
 ```
 
 ### 7. Deploy Configuration Files
@@ -235,8 +242,9 @@ sudo systemctl enable --now bluetooth.service
 mkdir -p ~/Pictures/Screenshots
 ```
 
-### 12. Reboot
+### 12. Regenerate microcode and Reboot
 ```bash
+sudo mkinitcpio -P
 reboot
 ```
 

@@ -18,6 +18,19 @@ exec udiskie
 ### Wallpaper
 output * bg ~/.config/wallpapers/lamp_post.png fill
 
+# Monitors
+output DP-3 {
+    mode 2560x1440@180Hz
+    pos 0 0
+    scale 1
+}
+
+output HDMI-A-3 {
+    mode 2560x1440@144Hz
+    pos 2560 0
+    scale 1
+}
+
 ### Window configuration
 # Border thickness
 default_border pixel 1
@@ -32,7 +45,14 @@ gaps inner 2
 gaps outer 2
 smart_gaps off
 
-### Keyboard layouts
+### Keyboard and mouse
+# Mouse sensitivity
+input type:pointer {
+    accel_profile flat
+    pointer_accel 0.3 # -1 is slow, 0 is default, 1 is fast
+}
+
+# Keyboard layouts
 input * {
     xkb_options caps:swapescape
     xkb_layout us,ca
@@ -65,7 +85,7 @@ bindsym $mod+Shift+slash exec ~/.config/scripts/help_menu.sh
 
 # Special key to take a screenshot of a screen area and copy it to clipboard
 bindsym Print exec slurp | grim -g - - | tee ~/Pictures/Screenshots/$(date +%s).png | wl-copy
-# Same thing, but using a different keubind
+# Same thing, but using a different keybind
 bindsym $mod+Shift+s exec slurp | grim -g - - | tee ~/Pictures/Screenshots/$(date +%s).png | wl-copy
 
 # Switching keyboard layout
@@ -167,6 +187,7 @@ bar {
         statusline #cfccc0
         background #131313BB
         inactive_workspace #131313BB #131313BB #5c5c5c
+        active_workspace #131313BB #131313BB #5c5c5c
         focused_workspace #131313 #366066EE #dfe0c8
     }
 }

@@ -29,7 +29,7 @@ headphones_indicator = true
 # Network
 [[block]]
 block = "net"
-format = " $icon {$ssid|Wired connection} "
+format = " $icon {$ssid|Ethernet} "
 
 # Battery
 [[block]]
