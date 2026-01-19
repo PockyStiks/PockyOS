@@ -1,8 +1,10 @@
 # PockyOS
 
-A minimal, performance-oriented Arch Linux desktop environment built around the Sway compositor with the optimized CachyOS kernel.
+A minimal, performance-focused Arch Linux desktop built on the Sway compositor and the optimized CachyOS kernel, with a strong emphasis on TUI-based tools.
 
-![Preview](./src/preview.png)
+![Preview1](./src/preview1.png)
+![Preview2](./src/preview2.png)
+![Preview3](./src/preview3.png)
 
 ## Tech Stack
 
@@ -40,10 +42,10 @@ Archinstall instructions:
 3. Configure the following:
    - **Profile**: Select `minimal` profile
    - **Audio**: PipeWire
-   - **Kernel** linux, UKI enabled
+   - **Kernel** linux, **UKI enabled**
    - **Bluetooth**: Enabled (if you have it)
    - **Additional packages**: Add `git`, `vim` (or `nano`)
-   - **Network**: Enable `NetworkManager`
+   - **Network**: NetworkManager (default backend)
    - Complete the rest of the installation as desired
 
 After installation completes, reboot into your new system.
@@ -182,6 +184,9 @@ paru -S sunsetr
 
 # Discord
 sudo pacman -S discord
+
+# Epub reader
+sudo pacman -S foliate
 ```
 
 ### 7. Deploy Configuration Files
@@ -338,6 +343,10 @@ PockyOS uses Sway as the window manager with a keyboard-driven workflow. The def
 ### Removing battery and brightness indecators from the status bar (for desktop use)
 
 Comment out the `# Brightness` and `# Battery` blocks in `~/.config/i3status-rust/config.toml`
+
+### Changing the wallpaper
+
+Change `output * bg ~/.config/wallpapers/lamp_post.png fill` in `~/.config/sway/config` to point to your wallpaper
 
 ### Changing monitor setup (resolution, refresh rate, position)
 
