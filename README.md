@@ -264,6 +264,7 @@ PockyOS uses Sway as the window manager with a keyboard-driven workflow. The def
 | `Mod+I` | Open browser |
 | `Mod+E` | File manager |
 | `Mod+D` | Open Discord |
+| `Mod+Space` | Switch keyboard layout |
 
 ### TUI Menus
 
@@ -329,3 +330,27 @@ PockyOS uses Sway as the window manager with a keyboard-driven workflow. The def
 | `Mod+Ctrl+H/J/K/L` | Resize window (width/height) |
 | `Mod+Ctrl+Arrow Keys` | Resize window (directional) |
 | `Mod+Right Mouse Button` | Resize window with mouse |
+
+## Common configurations
+
+### Removing battery and brightness indecators from the status bar (for desktop use)
+
+Comment out the `# Brightness` and `# Battery` blocks in `~/.config/i3status-rust/config.toml`
+
+### Changing monitor setup (resolution, refresh rate, position)
+
+1. Get the output name of your monitor(s) by running `swaymsg -t get_outputs`
+2. Configure the ouput options for each monitor under the `# Monitors` section in `~/.config/sway/config`
+
+### Adding keyboard layout
+
+1. Add the keyboard layout in `~/.config/sway/config` inside the input block
+2. Uncomment the `# keyboard layout` block in `~/.config/i3status-rust/config.toml`
+
+### Changing mouse sensitivity
+
+Change the `pointer_accel` parameter in `~/.config/sway/config`
+
+### Swapping Escape and Caps Lock
+
+Uncomment `xkb_options caps:swapescape` inside the input block in `~/.config/sway/config`

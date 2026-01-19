@@ -54,9 +54,9 @@ input type:pointer {
 
 # Keyboard layouts
 input * {
-    xkb_options caps:swapescape
-    xkb_layout us,ca
-    xkb_variant ,fr
+    # xkb_options caps:swapescape # swaps escape and caps lock
+    # xkb_layout us,ca # US and French Canadian keyboard layouts
+    # xkb_variant ,fr
 }
 
 ### Key bindings

@@ -12,6 +12,7 @@ Basics
   Mod+I         Browser
   Mod+E         File manager
   Mod+D         Discord
+  Mod+Space     Switch keyboard layout
 
 Menus / TUI
   Mod+N         Network TUI (wlctl)
