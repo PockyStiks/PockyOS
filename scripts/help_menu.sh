@@ -1,66 +1,55 @@
-#!/bin/sh
-set -eu
+#!/bin/bash
+set -euo pipefail
 
-text="$(cat <<'EOF'
-Keybindings Cheat Sheet
+cat <<'EOF' | fuzzel --dmenu --width=60 --lines=20
+                  KEYBINDINGS CHEAT SHEET
+BASICS
+  Mod+Shift+R          Reload Sway config
+  Mod+Return           Open terminal
+  Mod+Q                Kill focused window
+  Mod+R                App launcher
+  Mod+I                Browser
+  Mod+E                File manager
+  Mod+D                Discord
+  Mod+Space            Switch keyboard layout
 
-Basics
-  Mod+Shift+R   Reload Sway config
-  Mod+Return    Open terminal
-  Mod+Q         Kill focused window
-  Mod+R         App launcher
-  Mod+I         Browser
-  Mod+E         File manager
-  Mod+D         Discord
-  Mod+Space     Switch keyboard layout
+MENUS / TUI
+  Mod+N                Network TUI (wlctl)
+  Mod+A                Audio mixer TUI (wiremix)
+  Mod+B                Bluetooth TUI (bluetui)
+  Mod+S                System info TUI (btop)
+  Mod+P                Power menu
+  Mod+U                Update menu
+  Mod+C                Config menu
+  Mod+M                General menu
 
-Menus / TUI
-  Mod+N         Network TUI (wlctl)
-  Mod+A         Audio mixer TUI (wiremix)
-  Mod+B         Bluetooth TUI (bluetui)
-  Mod+S         System info TUI (btop)
-  Mod+P         Power menu
-  Mod+U         Update menu
-  Mod+C         Config menu
-  Mod+M         General menu
+SCREENSHOTS
+  Print                Area screenshot → save + copy to clipboard
+  Mod+Shift+S          Area screenshot → save + copy to clipboard
 
-Screenshots
-  Print         Area screenshot → save + copy to clipboard
-  Mod+Shift+S   Area screenshot → save + copy to clipboard
+FOCUS
+  Mod+H/J/K/L          Focus left / down / up / right
+  Mod+←/↓/↑/→          Focus left / down / up / right
 
-Keyboard
-  Mod+Space     Next keyboard layout
+MOVE WINDOW
+  Mod+Shift+H/J/K/L    Move window left / down / up / right
+  Mod+Shift+←/↓/↑/→    Move window left / down / up / right
+  Mod+LMB              Move window with mouse
 
-Focus
-  Mod+H/J/K/L   Focus left / down / up / right
-  Mod+←/↓/↑/→   Focus left / down / up / right
+WORKSPACES
+  Mod+1..9             Switch workspace 1..9
+  Mod+Shift+1..9       Move window to workspace 1..9
 
-Move window
-  Mod+Shift+H/J/K/L   Move window left / down / up / right
-  Mod+Shift+←/↓/↑/→   Move window left / down / up /right
-  Mod+LMB             Move window with mouse
+LAYOUT
+  Mod+F                Fullscreen toggle
+  Mod+V                Toggle floating/tiling
 
-Workspaces
-  Mod+1..9      Switch workspace 1..9
-  Mod+Shift+1..9 Move window to workspace 1..9
+SCRATCHPAD
+  Mod+-                Send window to scratchpad
+  Mod+=                Show/cycle scratchpad
 
-Layout
-  Mod+F         Fullscreen toggle
-  Mod+V         Toggle floating/tiling
-
-Scratchpad
-  Mod+-         Send window to scratchpad
-  Mod+=         Show/cycle scratchpad
-
-Resize
-  Mod+Ctrl+H/J/K/L   Resize (width/height)
-  Mod+Ctrl+←/↓/↑/→   Resize (width/height)
-  Mod+RMB            Resize window with mouse
-
-Press Q to exit
+RESIZE
+  Mod+Ctrl+H/J/K/L     Resize (width/height)
+  Mod+Ctrl+←/↓/↑/→     Resize (width/height)
+  Mod+RMB              Resize window with mouse
 EOF
-)"
-
-exec foot -T "Sway Help" -e sh -lc '
-  printf "%s\n" "$0" | less -R
-' "$text"
