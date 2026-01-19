@@ -18,18 +18,18 @@ exec udiskie
 ### Wallpaper
 output * bg ~/.config/wallpapers/lamp_post.png fill
 
-# Monitors
-output DP-3 {
-    mode 2560x1440@180Hz
-    pos 0 0
-    scale 1
-}
+### Monitors
+# output DP-3 {
+#     mode 2560x1440@180Hz
+#     pos 0 0
+#     scale 1
+# }
 
-output HDMI-A-3 {
-    mode 2560x1440@144Hz
-    pos 2560 0
-    scale 1
-}
+# output HDMI-A-3 {
+#     mode 2560x1440@144Hz
+#     pos 2560 0
+#     scale 1
+# }
 
 ### Window configuration
 # Border thickness

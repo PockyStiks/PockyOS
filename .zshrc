@@ -21,6 +21,7 @@ eval "$(zoxide init zsh --cmd cd)"
 setopt prompt_subst
 
 # Aliases
+alias ls='ls --color=auto'
 alias shutdown="shutdown now"
 alias h=helix
 alias o=xdg-open
