@@ -2,6 +2,8 @@
 
 A minimal, performance-oriented Arch Linux desktop environment built around the Sway compositor with the optimized CachyOS kernel.
 
+![Preview](./src/preview.png)
+
 ## Tech Stack
 
 | Component | Tool |
