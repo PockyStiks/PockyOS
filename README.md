@@ -107,7 +107,7 @@ sudo rm /boot/vmlinuz-linux
 
 Install all packages that are needed regardless of hardware:
 ```bash
-sudo pacman -S --needed man-db man-pages git vim wget mesa sway foot ttf-jetbrains-mono ttf-nerd-fonts-symbols noto-fonts noto-fonts-emoji fuzzel autotiling ly btop helix zsh zsh-syntax-highlighting slurp grim wl-clipboard mako rtkit i3status-rust brightnessctl xdg-utils yazi zoxide fzf wiremix bluetui xdg-desktop-portal-wlr polkit xorg-xwayland pipewire-alsa pipewire-pulse unzip base-devel udisks2 gvfs gvfs-mtp udiskie swaybg
+sudo pacman -S --needed man-db man-pages git vim wget mesa sway foot ttf-jetbrains-mono ttf-nerd-fonts-symbols noto-fonts noto-fonts-emoji fuzzel autotiling ly btop helix zsh zsh-syntax-highlighting slurp grim wl-clipboard mako rtkit i3status-rust brightnessctl xdg-utils yazi zoxide fzf wiremix bluetui xdg-desktop-portal-wlr polkit xorg-xwayland pipewire-alsa pipewire-pulse unzip base-devel udisks2 gvfs gvfs-mtp udiskie swaybg thunar materia-gtk-theme
 ```
 **Note:** A web browser is not included, please chose and install one.
 
@@ -187,20 +187,23 @@ sudo pacman -S discord
 
 # Epub reader
 sudo pacman -S foliate
+
+# Man pages but shorter
+sudo pacman -S tldr
 ```
 
 ### 7. Deploy Configuration Files
 ```bash
 # Backup existing configs if you have any
 mkdir -p ~/.config/backup
-cp -r ~/.config/{foot,fuzzel,helix,i3status-rust,mako,sway,yazi,btop,wallpapers} ~/.config/backup/ 2>/dev/null || true
+cp -r ~/.config/{foot,fuzzel,helix,i3status-rust,mako,sway,yazi,btop,wallpapers,scripts,"gtk-3.0","gtk-4.0"} ~/.config/backup/ 2>/dev/null || true
 mv ~/.zshrc ~/.zshrc.backup
 
-# Copy configuration files scripts, and wallpapers
-cp -r foot fuzzel helix i3status-rust mako sway yazi btop wallpapers scripts ~/.config/
+# Copy configuration files, scripts, and wallpapers
+cp -r foot fuzzel helix i3status-rust mako sway yazi btop wallpapers scripts "gtk-3.0" "gtk-4.0" ~/.config/
 cp .zshrc ~
 
-# Make all scripts executable
+# Make all sciripts executable
 chmod +x ~/.config/scripts/*.sh
 ```
 
