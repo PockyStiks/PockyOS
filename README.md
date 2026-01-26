@@ -97,8 +97,6 @@ uname -r  # Should show cachyos kernel
 Clean up old kernel (only once if everything works):
 ```bash
 sudo pacman -R linux linux-headers
-sudo rm /boot/vmlinuz-linux-cachyos
-sudo rm /boot/initramfs-linux-cachyos.img
 sudo rm /boot/EFI/Linux/arch-linux.efi
 sudo rm /boot/vmlinuz-linux
 ```
