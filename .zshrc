@@ -21,6 +21,8 @@ setopt prompt_subst
 
 # Aliases
 alias ls='ls --color=auto'
+alias mv="mv -i"
+alias cp="cp -i"
 alias shutdown="shutdown now"
 alias h=helix
 alias o=xdg-open
