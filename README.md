@@ -42,7 +42,7 @@ Archinstall instructions:
 3. Configure the following:
    - **Profile**: Select `minimal` profile
    - **Audio**: PipeWire
-   - **Kernel** linux, **UKI enabled**
+   - **Kernel** linux, **UKI enabled** (UKI is required for this guide)
    - **Bluetooth**: Enabled (if you have it)
    - **Additional packages**: Add `git`, `vim` (or `nano`)
    - **Network**: NetworkManager (default backend)
@@ -86,6 +86,7 @@ Generate the UKI and set as default:
 sudo mkinitcpio -p linux-cachyos
 bootctl list
 sudo bootctl set-default arch-linux-cachyos.efi
+bootctl status # Should see arch-linux-cachyos.efi as default entry
 ```
 
 Reboot and verify:
@@ -96,20 +97,30 @@ uname -r  # Should show cachyos kernel
 
 Clean up old kernel (only once if everything works):
 ```bash
+# ⚠️ Make sure your system boots successfully with the CachyOS kernel before removing the stock kernel
 sudo pacman -R linux linux-headers
 sudo rm /boot/EFI/Linux/arch-linux.efi
-sudo rm /boot/vmlinuz-linux
 ```
 
 ### 4. Install System Packages
 
 Install all packages that are needed regardless of hardware:
 ```bash
-sudo pacman -S --needed man-db man-pages git vim wget mesa sway foot ttf-jetbrains-mono ttf-nerd-fonts-symbols noto-fonts noto-fonts-emoji fuzzel autotiling ly btop helix zsh zsh-syntax-highlighting slurp grim wl-clipboard mako rtkit i3status-rust brightnessctl xdg-utils yazi zoxide fzf wiremix bluetui xdg-desktop-portal-wlr polkit xorg-xwayland pipewire-alsa pipewire-pulse unzip base-devel udisks2 gvfs gvfs-mtp udiskie swaybg thunar materia-gtk-theme
+sudo pacman -S --needed base linux-firmware man-db man-pages git vim wget mesa sway foot ttf-jetbrains-mono ttf-nerd-fonts-symbols noto-fonts noto-fonts-emoji fuzzel autotiling ly btop helix zsh zsh-syntax-highlighting slurp grim wl-clipboard mako rtkit i3status-rust brightnessctl xdg-utils yazi zoxide fzf wiremix bluetui xdg-desktop-portal-wlr polkit xorg-xwayland pipewire-alsa pipewire-pulse unzip base-devel udisks2 gvfs gvfs-mtp dosfstools exfatprogs ntfs-3g udiskie swaybg thunar materia-gtk-theme xdg-user-dirs xdg-user-dirs-gtk
 ```
-**Note:** A web browser is not included, please chose and install one.
+**Note:** A web browser is not included, please choose and install one.
 
-### 5. Install Hardware-Specific Packages
+### 5. Install Paru and AUR Packages
+```bash
+git clone https://aur.archlinux.org/paru.git
+cd paru
+makepkg -si
+cd ..
+rm -rf paru
+paru -S wlctl-bin
+```
+
+### 6. Install Hardware-Specific Packages
 
 Choose the appropriate commands based on your hardware. You can combine multiple selections (e.g., AMD CPU + NVIDIA GPU).
 
@@ -142,53 +153,15 @@ sudo pacman -S --needed vulkan-intel libva-intel-driver intel-media-driver
 sudo pacman -S --needed nvidia-open-dkms nvidia-utils nvidia-settings
 ```
 
-NVIDIA does **not officially support Wayland**, so you need to launch Sway with extra configurations. To make this easy:
+**Sway works on NVIDIA, but requires extra flags.** To make this easy:
 
-1. Install the Sway NVIDIA wrapper:  
+1. Install the Sway NVIDIA wrapper:
 ```bash
 paru -S sway-nvidia
 ```
 2. At the Ly login screen, select the Sway (NVIDIA) session using the arrow keys before logging in.
 
 Now Sway will start with the correct options for NVIDIA GPUs.
-
-### 6. Install Paru and AUR Packages
-```bash
-git clone https://aur.archlinux.org/paru.git
-cd paru
-makepkg -si
-cd ..
-rm -rf paru
-paru -S wlctl-bin
-```
-
-#### 6b. Install optional packages (stuff I personally use)
-```bash
-# Pipx for python cli tools
-sudo pacman -S python-pipx
-pipx ensurepath
-pipx install jupyterlab grip
-
-# Language servers
-pipx install ruff ty
-sudo pacman -S clang typescript-language-server typescript yaml-language-server marksman
-paru -S vscode-langservers-extracted
-
-# Micromamba for virtual environments
-"${SHELL}" <(curl -L micro.mamba.pm/install.sh)
-
-# Blue light filter
-paru -S sunsetr
-
-# Discord
-sudo pacman -S discord
-
-# Epub reader
-sudo pacman -S foliate
-
-# Man pages but shorter
-sudo pacman -S tldr
-```
 
 ### 7. Deploy Configuration Files
 ```bash
@@ -201,7 +174,7 @@ mv ~/.zshrc ~/.zshrc.backup
 cp -r foot fuzzel helix i3status-rust mako sway yazi btop wallpapers scripts "gtk-3.0" "gtk-4.0" ~/.config/
 cp .zshrc ~
 
-# Make all sciripts executable
+# Make all scripts executable
 chmod +x ~/.config/scripts/*.sh
 ```
 
@@ -230,6 +203,9 @@ git clone https://github.com/sindresorhus/pure.git ~/.zsh/pure
 
 Enable audio and power management:
 ```bash
+# Enable NetworkManager if not done already
+sudo systemctl enable --now NetworkManager
+
 # Enable rtkit daemon to remove PipeWire warnings
 sudo systemctl enable --now rtkit-daemon.service
 systemctl --user restart pipewire pipewire-pulse wireplumber
@@ -247,10 +223,40 @@ sudo systemctl enable --now bluetooth.service
 
 ### 11. Create Required Directories
 ```bash
+xdg-user-dirs-update
 mkdir -p ~/Pictures/Screenshots
 ```
 
-### 12. Regenerate microcode and Reboot
+#### 12. **_[Optional]_** Install additional packages (stuff I personally use)
+```bash
+# Pipx for python cli tools
+sudo pacman -S python-pipx
+pipx ensurepath
+exec $SHELL
+pipx install jupyterlab grip
+
+# Language servers
+pipx install ruff ty
+sudo pacman -S clang typescript-language-server typescript yaml-language-server marksman
+paru -S vscode-langservers-extracted
+
+# Micromamba for virtual environments
+"${SHELL}" <(curl -L micro.mamba.pm/install.sh)
+
+# Blue light filter
+paru -S sunsetr
+
+# Discord
+sudo pacman -S discord
+
+# Epub reader
+sudo pacman -S foliate
+
+# Man pages but shorter
+sudo pacman -S tldr
+```
+
+### 13. Apply microcode changes and Reboot
 ```bash
 sudo mkinitcpio -P
 reboot
@@ -341,7 +347,7 @@ PockyOS uses Sway as the window manager with a keyboard-driven workflow. The def
 
 ## Common configurations
 
-### Removing battery and brightness indecators from the status bar (for desktop use)
+### Removing battery and brightness indicators from the status bar (for desktop use)
 
 Comment out the `# Brightness` and `# Battery` blocks in `~/.config/i3status-rust/config.toml`
 
@@ -352,7 +358,7 @@ Change `output * bg ~/.config/wallpapers/lamp_post.png fill` in `~/.config/sway/
 ### Changing monitor setup (resolution, refresh rate, position)
 
 1. Get the output name of your monitor(s) by running `swaymsg -t get_outputs`
-2. Configure the ouput options for each monitor under the `# Monitors` section in `~/.config/sway/config`
+2. Configure the output options for each monitor under the `# Monitors` section in `~/.config/sway/config`
 
 ### Adding keyboard layout
 
