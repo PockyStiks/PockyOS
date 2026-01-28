@@ -96,8 +96,9 @@ uname -r  # Should show cachyos kernel
 ```
 
 Clean up old kernel (only once if everything works):
+> [!WARNING]
+> Make sure your system boots with the CachyOS kernel before removing the unused Arch kernel.
 ```bash
-# ⚠️ Make sure your system boots successfully with the CachyOS kernel before removing the stock kernel
 sudo pacman -R linux linux-headers
 sudo rm /boot/EFI/Linux/arch-linux.efi
 ```
