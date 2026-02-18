@@ -86,13 +86,17 @@ Generate the UKI and set as default:
 sudo mkinitcpio -p linux-cachyos
 bootctl list
 sudo bootctl set-default arch-linux-cachyos.efi
-bootctl status # Should see arch-linux-cachyos.efi as default entry
+
+# Should see arch-linux-cachyos.efi as default entry
+bootctl status
 ```
 
 Reboot and verify:
 ```bash
 reboot
-uname -r  # Should show cachyos kernel
+
+# Should show cachyos kernel
+uname -r
 ```
 
 Clean up old kernel (only once if everything works):
@@ -183,7 +187,8 @@ chmod +x ~/.config/scripts/*.sh
 
 Enable ly display manager:
 ```bash
-mkdir -p ~/.local/state # Needed for log file
+# Needed for log file
+mkdir -p ~/.local/state
 sudo systemctl enable ly@tty1.service
 ```
 
@@ -255,6 +260,9 @@ sudo pacman -S foliate
 
 # Man pages but shorter
 sudo pacman -S tldr
+
+# Zed editor
+sudo pacman -S zed
 ```
 
 ### 13. Apply microcode changes and Reboot
