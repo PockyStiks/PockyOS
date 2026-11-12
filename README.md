@@ -111,7 +111,7 @@ sudo rm /boot/EFI/Linux/arch-linux.efi
 
 Install all packages that are needed regardless of hardware:
 ```bash
-sudo pacman -S --needed base linux-firmware man-db man-pages git vim wget mesa sway foot ttf-jetbrains-mono ttf-nerd-fonts-symbols noto-fonts noto-fonts-emoji fuzzel autotiling ly btop helix zsh zsh-syntax-highlighting slurp grim wl-clipboard mako rtkit i3status-rust brightnessctl xdg-utils yazi zoxide fzf wiremix bluetui xdg-desktop-portal-wlr polkit xorg-xwayland pipewire-alsa pipewire-pulse unzip base-devel udisks2 gvfs gvfs-mtp dosfstools exfatprogs ntfs-3g udiskie swaybg thunar materia-gtk-theme xdg-user-dirs xdg-user-dirs-gtk
+sudo pacman -S --needed base linux-firmware man-db man-pages git vim wget mesa sway foot ttf-jetbrains-mono ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols noto-fonts noto-fonts-emoji fuzzel autotiling ly btop helix zsh zsh-syntax-highlighting slurp grim wl-clipboard mako rtkit i3status-rust brightnessctl xdg-utils yazi zoxide fzf wiremix bluetui xdg-desktop-portal-wlr polkit xorg-xwayland pipewire-alsa pipewire-pulse unzip base-devel udisks2 gvfs gvfs-mtp dosfstools exfatprogs ntfs-3g udiskie swaybg thunar materia-gtk-theme xdg-user-dirs xdg-user-dirs-gtk
 ```
 **Note:** A web browser is not included, please choose and install one.
 
