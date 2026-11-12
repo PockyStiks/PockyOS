@@ -1,6 +1,10 @@
 # PockyOS
 
-A minimal, performance-oriented Arch Linux desktop environment built around the Sway compositor with the optimized CachyOS kernel.
+A minimal, performance-focused Arch Linux desktop built on the Sway compositor and the optimized CachyOS kernel, with a strong emphasis on TUI-based tools.
+
+![Preview1](./src/preview1.png)
+![Preview2](./src/preview2.png)
+![Preview3](./src/preview3.png)
 
 ## Tech Stack
 
@@ -38,10 +42,10 @@ Archinstall instructions:
 3. Configure the following:
    - **Profile**: Select `minimal` profile
    - **Audio**: PipeWire
-   - **Kernel** linux, UKI enabled
+   - **Kernel** linux, **UKI enabled** (UKI is required for this guide)
    - **Bluetooth**: Enabled (if you have it)
    - **Additional packages**: Add `git`, `vim` (or `nano`)
-   - **Network**: Enable `NetworkManager`
+   - **Network**: NetworkManager (default backend)
    - Complete the rest of the installation as desired
 
 After installation completes, reboot into your new system.
@@ -82,35 +86,46 @@ Generate the UKI and set as default:
 sudo mkinitcpio -p linux-cachyos
 bootctl list
 sudo bootctl set-default arch-linux-cachyos.efi
+
+# Should see arch-linux-cachyos.efi as default entry
+bootctl status
 ```
 
 Reboot and verify:
 ```bash
 reboot
-uname -r  # Should show cachyos kernel
+
+# Should show cachyos kernel
+uname -r
 ```
 
-Clean up old kernel (if everything works):
+Clean up old kernel (only once if everything works):
+> [!WARNING]
+> Make sure your system boots with the CachyOS kernel before removing the unused Arch kernel.
 ```bash
 sudo pacman -R linux linux-headers
-sudo rm /boot/vmlinuz-linux-cachyos
-sudo rm /boot/initramfs-linux-cachyos.img
+sudo rm /boot/EFI/Linux/arch-linux.efi
 ```
 
 ### 4. Install System Packages
 
 Install all packages that are needed regardless of hardware:
 ```bash
-sudo pacman -S --needed git vim wget mesa sway foot ttf-jetbrains-mono ttf-jetbrains-mono-nerd \
-    ttf-nerd-fonts-symbols noto-fonts noto-fonts-emoji fuzzel autotiling \
-    ly btop helix zsh zsh-syntax-highlighting slurp grim wl-clipboard mako \
-    rtkit i3status-rust brightnessctl xdg-utils yazi zoxide fzf wiremix \
-    bluetui xdg-desktop-portal-wlr polkit xorg-xwayland pipewire-alsa \
-    pipewire-pulse unzip base-devel udisks2 gvfs gvfs-mtp udiskie swaybg
+sudo pacman -S --needed base linux-firmware man-db man-pages git vim wget mesa sway foot ttf-jetbrains-mono ttf-nerd-fonts-symbols noto-fonts noto-fonts-emoji fuzzel autotiling ly btop helix zsh zsh-syntax-highlighting slurp grim wl-clipboard mako rtkit i3status-rust brightnessctl xdg-utils yazi zoxide fzf wiremix bluetui xdg-desktop-portal-wlr polkit xorg-xwayland pipewire-alsa pipewire-pulse unzip base-devel udisks2 gvfs gvfs-mtp dosfstools exfatprogs ntfs-3g udiskie swaybg thunar materia-gtk-theme xdg-user-dirs xdg-user-dirs-gtk
 ```
-**Note:** A web browser is not included, please chose and install one.
+**Note:** A web browser is not included, please choose and install one.
 
-### 5. Install Hardware-Specific Packages
+### 5. Install Paru and AUR Packages
+```bash
+git clone https://aur.archlinux.org/paru.git
+cd paru
+makepkg -si
+cd ..
+rm -rf paru
+paru -S wlctl-bin
+```
+
+### 6. Install Hardware-Specific Packages
 
 Choose the appropriate commands based on your hardware. You can combine multiple selections (e.g., AMD CPU + NVIDIA GPU).
 
@@ -140,33 +155,28 @@ sudo pacman -S --needed vulkan-intel libva-intel-driver intel-media-driver
 
 **NVIDIA GPU:**
 ```bash
-sudo pacman -S --needed nvidia nvidia-utils nvidia-settings
+sudo pacman -S --needed nvidia-open-dkms nvidia-utils nvidia-settings
 ```
 
-**Note for NVIDIA users:** Add `nvidia_drm.modeset=1` to your kernel parameters. Wayland support on NVIDIA is improving but may have issues.
+**Sway works on NVIDIA, but requires extra flags.** To make this easy:
 
+1. Install the Sway NVIDIA wrapper:
 ```bash
-sudo vim /etc/kernel/cmdline # Add nvidia_drm.modeset=1 to the end of this line, do not add new lines
+paru -S sway-nvidia
 ```
+2. At the Ly login screen, select the Sway (NVIDIA) session using the arrow keys before logging in.
 
-### 6. Install Paru and AUR Packages
-```bash
-cd /tmp
-git clone https://aur.archlinux.org/paru.git
-cd paru
-makepkg -si
-paru -S wlctl-bin
-```
+Now Sway will start with the correct options for NVIDIA GPUs.
 
 ### 7. Deploy Configuration Files
 ```bash
 # Backup existing configs if you have any
 mkdir -p ~/.config/backup
-cp -r ~/.config/{foot,fuzzel,helix,i3status-rust,mako,sway,yazi,btop,wallpapers} ~/.config/backup/ 2>/dev/null || true
+cp -r ~/.config/{foot,fuzzel,helix,i3status-rust,mako,sway,yazi,btop,wallpapers,scripts,"gtk-3.0","gtk-4.0"} ~/.config/backup/ 2>/dev/null || true
 mv ~/.zshrc ~/.zshrc.backup
 
-# Copy configuration files scripts, and wallpapers
-cp -r foot fuzzel helix i3status-rust mako sway yazi btop wallpapers scripts ~/.config/
+# Copy configuration files, scripts, and wallpapers
+cp -r foot fuzzel helix i3status-rust mako sway yazi btop wallpapers scripts "gtk-3.0" "gtk-4.0" ~/.config/
 cp .zshrc ~
 
 # Make all scripts executable
@@ -177,7 +187,8 @@ chmod +x ~/.config/scripts/*.sh
 
 Enable ly display manager:
 ```bash
-mkdir -p ~/.local/state # Needed for log file
+# Needed for log file
+mkdir -p ~/.local/state
 sudo systemctl enable ly@tty1.service
 ```
 
@@ -198,6 +209,9 @@ git clone https://github.com/sindresorhus/pure.git ~/.zsh/pure
 
 Enable audio and power management:
 ```bash
+# Enable NetworkManager if not done already
+sudo systemctl enable --now NetworkManager
+
 # Enable rtkit daemon to remove PipeWire warnings
 sudo systemctl enable --now rtkit-daemon.service
 systemctl --user restart pipewire pipewire-pulse wireplumber
@@ -215,11 +229,45 @@ sudo systemctl enable --now bluetooth.service
 
 ### 11. Create Required Directories
 ```bash
+xdg-user-dirs-update
 mkdir -p ~/Pictures/Screenshots
 ```
 
-### 12. Reboot
+#### 12. **_[Optional]_** Install additional packages (stuff I personally use)
 ```bash
+# Pipx for python cli tools
+sudo pacman -S python-pipx
+pipx ensurepath
+exec $SHELL
+pipx install jupyterlab grip
+
+# Language servers
+pipx install ruff ty
+sudo pacman -S clang typescript-language-server typescript yaml-language-server marksman
+paru -S vscode-langservers-extracted
+
+# Micromamba for virtual environments
+"${SHELL}" <(curl -L micro.mamba.pm/install.sh)
+
+# Blue light filter
+paru -S sunsetr
+
+# Discord
+sudo pacman -S discord
+
+# Epub reader
+sudo pacman -S foliate
+
+# Man pages but shorter
+sudo pacman -S tldr
+
+# Zed editor
+sudo pacman -S zed
+```
+
+### 13. Apply microcode changes and Reboot
+```bash
+sudo mkinitcpio -P
 reboot
 ```
 
@@ -239,6 +287,7 @@ PockyOS uses Sway as the window manager with a keyboard-driven workflow. The def
 | `Mod+I` | Open browser |
 | `Mod+E` | File manager |
 | `Mod+D` | Open Discord |
+| `Mod+Space` | Switch keyboard layout |
 
 ### TUI Menus
 
@@ -304,3 +353,31 @@ PockyOS uses Sway as the window manager with a keyboard-driven workflow. The def
 | `Mod+Ctrl+H/J/K/L` | Resize window (width/height) |
 | `Mod+Ctrl+Arrow Keys` | Resize window (directional) |
 | `Mod+Right Mouse Button` | Resize window with mouse |
+
+## Common configurations
+
+### Removing battery and brightness indicators from the status bar (for desktop use)
+
+Comment out the `# Brightness` and `# Battery` blocks in `~/.config/i3status-rust/config.toml`
+
+### Changing the wallpaper
+
+Change `output * bg ~/.config/wallpapers/lamp_post.png fill` in `~/.config/sway/config` to point to your wallpaper
+
+### Changing monitor setup (resolution, refresh rate, position)
+
+1. Get the output name of your monitor(s) by running `swaymsg -t get_outputs`
+2. Configure the output options for each monitor under the `# Monitors` section in `~/.config/sway/config`
+
+### Adding keyboard layout
+
+1. Add the keyboard layout in `~/.config/sway/config` inside the input block
+2. Uncomment the `# keyboard layout` block in `~/.config/i3status-rust/config.toml`
+
+### Changing mouse sensitivity
+
+Change the `pointer_accel` parameter in `~/.config/sway/config`
+
+### Swapping Escape and Caps Lock
+
+Uncomment `xkb_options caps:swapescape` inside the input block in `~/.config/sway/config`

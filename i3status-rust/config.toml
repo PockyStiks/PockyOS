@@ -7,10 +7,10 @@ separator_fg = "#5C5C5C"
 icons = "material-nf"
 
 # Keyboard layout
-[[block]]
-block = "keyboard_layout"
-driver = "sway"
-mappings = { "English (US)" = "en", "French (Canada)" = "fr" }
+# [[block]]
+# block = "keyboard_layout"
+# driver = "sway"
+# mappings = { "English (US)" = "en", "French (Canada)" = "fr" }
 
 # Brightness
 [[block]]
@@ -29,7 +29,7 @@ headphones_indicator = true
 # Network
 [[block]]
 block = "net"
-format = " $icon {$ssid|Wired connection} "
+format = " $icon {$ssid|Ethernet} "
 
 # Battery
 [[block]]
