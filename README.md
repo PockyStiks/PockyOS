@@ -101,7 +101,7 @@ sudo rm /boot/initramfs-linux-cachyos.img
 
 Install all packages that are needed regardless of hardware:
 ```bash
-sudo pacman -S --needed git vim wget mesa sway foot ttf-jetbrains-mono
+sudo pacman -S --needed git vim wget mesa sway foot ttf-jetbrains-mono ttf-jetbrains-mono-nerd
     ttf-nerd-fonts-symbols noto-fonts noto-fonts-emoji fuzzel autotiling
     ly btop helix zsh zsh-syntax-highlighting slurp grim wl-clipboard mako
     rtkit i3status-rust brightnessctl xdg-utils yazi zoxide fzf wiremix
