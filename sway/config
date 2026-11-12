@@ -181,7 +181,7 @@ bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
 ### Status Bar
 bar {
     position top
-    font pango:JetBrains Mono 11
+    font pango:JetBrainsMono Nerd Font 11
     status_command i3status-rs
 
     colors {
